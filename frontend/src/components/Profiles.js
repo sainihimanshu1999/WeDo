@@ -3,15 +3,22 @@ import ProfileServices from "../services/ProfileServices";
 
 const Profiles = () => {
 
-    const [profile, setProfile] = useState('')
+    const [profile, setProfile] = useState([])
 
     useEffect(()=>{
-        ProfileServices.getProfile().then(response=>setProfile(response))
-    })
+        ProfileServices.getProfile().then(response=>{
+            setProfile(response)
+            console.log(response)})
+    },[])
 
     return (
         <div>
-        <h1>{profile}</h1>
+        {profile.map(user => (
+            <div key={user.id}>
+                <h1>{user.username}</h1>
+                <img src = {`http://localhost:8000/${user.picture}`}/>
+                </div>
+        ))}
         </div>
     );
 }
